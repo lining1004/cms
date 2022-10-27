@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 //不加任何注解 创建bean对象
 public interface RoleDao extends JpaRepository<Role,Integer> {
+    Role findByName(String name);
     /*
         不需要实现该接口。jpa实现。
 
