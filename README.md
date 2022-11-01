@@ -1,4 +1,5 @@
 # cms看点咨询项目
+- 项目技术：springMVC+springBoot+springdata-jpa+jwt+swagger+maven+mysql
 ## cms-day01:
 1. 介绍swagger jwt 技术
 2. 介绍项目需要，设计文档 
@@ -14,5 +15,6 @@
    1.实现栏目模块
 ## cms-day05
    1.实现咨询模块
+     举例：通过使用ThreadLocal实现获取用户信息
    2.实现评论模块
    
