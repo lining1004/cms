@@ -2,12 +2,14 @@ package com.briup.cms.service.impl;
 
 import com.briup.cms.bean.Article;
 import com.briup.cms.bean.User;
+import com.briup.cms.config.CmsInfo;
 import com.briup.cms.dao.ArticleDao;
 import com.briup.cms.exception.ServiceException;
 import com.briup.cms.service.IArticleService;
 import com.briup.cms.utils.UserInfoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -30,7 +32,7 @@ public class ArticleServiceImpl implements IArticleService {
         if(article.getId() == null){//新增
             //新增：
             article.setPublishTime(new Date());//发布时间
-            article.setStatus(0);//建议使用常量值
+            article.setStatus(CmsInfo.ARTICLE_STATUS_INIT);//文章初始状态，未审核
             article.setReadTimes(0);
             article.setThumbUp(0);
             article.setThumbDown(0);
@@ -44,7 +46,9 @@ public class ArticleServiceImpl implements IArticleService {
     }
 
     public Page<Article> findAllByUser(Integer pageNum, Integer pageSize) throws ServiceException {
-        return null;
+        Integer userId = UserInfoUtil.getUserId();
+        Page<Article> page = dao.findByUserId(userId, PageRequest.of(pageNum - 1, pageSize));
+        return page;
     }
 
     public void deleteArticleInBatch(List<Integer> ids) throws ServiceException {

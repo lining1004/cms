@@ -1,5 +1,6 @@
 package com.briup.cms.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class Comment {
     private String time;
     @ManyToOne //父评论
     @JoinColumn(name = "parent_id") //设置外键名称，默认提供的名字 属性名_主键属性ming
+    @JsonIgnore
     private Comment parent;
     /**
      * @OneToMany
@@ -44,10 +46,12 @@ public class Comment {
     //用户信息 user_id
     @ManyToOne  //多个评论对应一个用户
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     //文章信息 article_id
     @ManyToOne //多个评论对应一个文章
+    @JsonIgnore
     private Article article;
 
 }

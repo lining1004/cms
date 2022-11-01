@@ -42,9 +42,11 @@ public class Article {
     private Integer thumbDown;
     // 用户信息  fk  用户和咨询的关系 1：N
     @ManyToOne
+    @JsonIgnore
     private User user;
     //目录信息  category_id fk   1:N
     @ManyToOne
+    @JsonIgnore
     private Category category;
 
     //为了实现删除咨询时，可以级联删除评论信息，所以设置了文章类中评论属性

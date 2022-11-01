@@ -8,6 +8,7 @@ import com.briup.cms.web.vm.ArticleVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,5 +42,12 @@ public class ArticleController {
         service.deleteArticleInBatch(ids);
         return Result.success();
     }
+    @ApiOperation("根据用户分页获取资讯信息")
+    @GetMapping("/user")
+    public Result findByUser(Integer pageSize,Integer pageNum){
+        Page<Article> page = service.findAllByUser(pageNum, pageSize);
+        return Result.success(page);
+    }
+
 
 }

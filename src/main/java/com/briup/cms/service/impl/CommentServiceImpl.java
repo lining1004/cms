@@ -8,6 +8,7 @@ import com.briup.cms.service.ICommentService;
 import com.briup.cms.utils.UserInfoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +23,9 @@ public class CommentServiceImpl implements ICommentService {
     private CommentDao dao;
 
     public Page<Comment> findAll(Integer pageNum, Integer pageSize) throws ServiceException {
-        return null;
+        //如果通过返回的结果中自定义数据 需要大家编写对应的HQL或SQL
+        Page<Comment> page = dao.findAll(PageRequest.of(pageNum - 1, pageSize));
+        return page;
     }
 
     public void saveOrUpdateComment(Comment comment) throws ServiceException {

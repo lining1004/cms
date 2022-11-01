@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * service层对应的实现类
@@ -31,14 +32,15 @@ public class CategoryServiceImpl implements ICategoryService {
     }
     //新增或修改操作
     public void saveOrUpdateCategory(Category category) throws ServiceException {
-        //注意：当主键值不存在，jpa将修改操作改成新增操作
-        Category cate = dao.findById(category.getId()).orElse(null);
-        if(category.getId() != 0 && cate == null){
-            throw new ServiceException(ResultCode.DATA_NONE);
-        }
-        //新增或修改目录信息，保证目录名称是不重复的。
+        // if(){}else{}
 
-        // 扩展：设置相同层级(parent_id相同的目录)的序列号必须保证不重复
+        //当修改操作时，判断是否存在在该栏目信息如果不存在抛出异常
+        Integer id = category.getId();
+        if( id != null){ //修改操作
+            dao.findById(id) //当返回结果为null时，抛出异常
+                    .orElseThrow(() ->
+                            new ServiceException(ResultCode.DATA_NONE));
+        }
         dao.save(category);
     }
 

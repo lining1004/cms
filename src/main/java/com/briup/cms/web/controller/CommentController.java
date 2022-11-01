@@ -9,6 +9,7 @@ import com.briup.cms.web.vm.CommentVM;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,5 +54,10 @@ public class CommentController {
     public Result deleteBybatch(@RequestBody List<Integer> ids){
         service.deleteCommentInBatch(ids);
         return Result.success();
+    }
+    @GetMapping
+    public Result findByPage(Integer pageNum,Integer pageSize){
+        Page<Comment> page = service.findAll(pageNum, pageSize);
+        return Result.success(page.getContent());
     }
 }

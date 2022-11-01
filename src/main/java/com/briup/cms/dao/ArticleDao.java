@@ -1,6 +1,8 @@
 package com.briup.cms.dao;
 
 import com.briup.cms.bean.Article;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @Date 2022/11/1
  */
 public interface ArticleDao extends JpaRepository<Article,Integer> {
+    //自定义方法实现根据用户id查询咨询信息
+    Page<Article> findByUserId(Integer userId,Pageable pageable);
 }
