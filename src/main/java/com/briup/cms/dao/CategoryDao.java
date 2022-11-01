@@ -20,7 +20,6 @@ public interface CategoryDao extends JpaRepository<Category,Integer> {
     /*
         select * from cms_category where parent_id is null
 
-
      */
     Page<Category> findByParentIdIsNull(Pageable page);
 

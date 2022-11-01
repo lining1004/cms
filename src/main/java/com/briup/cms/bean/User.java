@@ -1,16 +1,24 @@
 package com.briup.cms.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * jpa 实体类对应的数据库表cms_user
  * @Author lining
  * @Date 2022/10/25
  */
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "cms_user")
@@ -39,4 +47,13 @@ public class User {
      */
     @ManyToOne //默认效果： 自动生成外键名role_id 选择Role类中主键id
     private Role role;
+
+    //为了实现删除用户时，希望删除调咨询信息及其对发表的评论信息
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE) //1:N
+    @JsonIgnore
+    private List<Article> articles;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)  //1:N
+    @JsonIgnore
+    private List<Comment> comments;
 }

@@ -44,12 +44,8 @@ public class CategoryController {
         Page<Category> page = service.findAllSortbyNo(pageNum, pageSize);
         return Result.success(page);
     }
-    /*
-       参数名=参数值
 
-
-     */
-    @ApiOperation("批量删除目录信息")
+    @ApiOperation(value = "批量删除目录信息",notes = "删除栏目时，删除对应的子栏目,然后将对应的咨询信息的外键值设置为null")
     @DeleteMapping
     public Result deleteByBatch(@RequestBody List<Integer> ids){
         service.deleteCategoryInBatch(ids);

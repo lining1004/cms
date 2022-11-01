@@ -43,22 +43,11 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     public void deleteCategoryInBatch(List<Integer> ids) throws ServiceException {
-        //咨询： 目录 ---》多个子目录 ---》咨询信息
-
         /*
-
-        批量删除   ：
-             当删除的id作为其他数据的外键值时，
-
-             情况1：删除一级目录id并删除对应的二级目录id
-             情况2：删除一级目录id并将对应的二级目录中外键值set null
-             情况3: 因为有外键约束，删除提示语法错误
+           实现效果：
+           利用jpa级联操作：当删除一个栏目时，对应的子栏目要求必须也删除。保留栏目对应咨询信息
          */
-        //update语句实现 将所有parentId set null,将外键值置空
-
-        //扩展： 需要先解决外键约束问题，然后再删除对应的主键值。
-
-        dao.deleteAllByIdInBatch(ids);
+        ids.forEach(id -> dao.deleteById(id));
     }
 
     public void updateCategoryNo(Integer id, int no) throws ServiceException {

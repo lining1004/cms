@@ -27,25 +27,19 @@ public class Category {
     private String name;
     private String description;
     private Integer no;
-    /*
-        如何实现外键约束？
-        1. 1:1  teacher  student
-        2. 1:N  teacher   cars
-        3. 目录信息： 外键父级id
-            1:N
-            N:1
-            1:1 1个目录只能一个父目录
-     */
-    //@OneToOne
-    //@OneToMany
-    //@ManyToOne
-    //private Category parent_id;
-
-    @OneToMany(mappedBy = "parent")
+    //CascadeType.REMOVE 删除父级栏目时，对应的子栏目信息一起删除
+    @OneToMany(mappedBy = "parent",cascade = CascadeType.REMOVE)
     private List<Category> children;//1对多
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="parent_id")
     @JsonIgnore //转换json字符串时，不进行序列化
     private Category parent;
+
+
+    //为了实现删除栏目时，将对应的咨询信息使用的外键值 set null
+    @OneToMany //1个栏目多个咨询信息
+    @JoinColumn(name = "category_id")
+    private List<Article> articles;
+
 }
